@@ -6,6 +6,7 @@ import { fetchUsers } from '../reducers/usersReducer'
 import {
   Link
 } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
 
 
 const Users = () => {
@@ -19,7 +20,7 @@ const Users = () => {
   return (
     <div>
       <h2>Users</h2>
-      <table>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th></th>
@@ -34,7 +35,7 @@ const Users = () => {
             </tr>
           )}
         </tbody>
-      </table>
+      </Table>
     </div>
   )
 }

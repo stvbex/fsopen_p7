@@ -14,13 +14,10 @@ const LoginForm = () => {
     event.preventDefault()
 
     try {
-      dispatch(loginUser(username, password))
-
-      setUsername('')
-      setPassword('')
+      await dispatch(loginUser(username, password))
     }
     catch (error) {
-      dispatch(setNotification(error, 'red', 5))
+      dispatch(setNotification(error.message, 'danger', 5))
     }
   }
 

@@ -1,8 +1,9 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 import { logoutUser } from '../reducers/currentUserReducer'
+
+import { Nav, Navbar } from 'react-bootstrap'
 
 const Navigation = () => {
 
@@ -14,16 +15,19 @@ const Navigation = () => {
     window.location.reload()
   }
 
-  const padding = {
-    padding: 5
-  }
-
   return (
-    <div>
-      <Link to='/' style={padding}>home</Link>
-      <Link to='/users' style={padding}>users</Link>
-      {currentUser.name} logged in <button onClick={handleLogout}>logout</button>
-    </div>
+    <Navbar bg="light" expand="lg">
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="mr-auto">
+          <Nav.Link href='/'>home</Nav.Link>
+          <Nav.Link href='/users'>users</Nav.Link>
+        </Nav>
+        <Navbar.Text>
+          {currentUser.name} logged in <button onClick={handleLogout}>logout</button>
+        </Navbar.Text>
+      </Navbar.Collapse>
+    </Navbar>
   )
 }
 

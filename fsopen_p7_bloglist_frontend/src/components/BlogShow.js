@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { fetchBlogs, updateBlog, removeBlog } from '../reducers/blogReducer'
+import { setNotification } from '../reducers/notificationReducer'
+import  BlogComments from './BlogComments'
 
 const BlogShow = () => {
   // Fetch blogs
@@ -16,8 +18,6 @@ const BlogShow = () => {
   const blog = match
     ? blogs.find(b => b.id === match.params.id)
     : null
-
-  console.log('blog', blog)
 
   const currentUser = useSelector(state => state.currentUser)
   const history = useHistory()
@@ -38,8 +38,11 @@ const BlogShow = () => {
     let confirmResult = window.confirm(
       `Remove blog ${blog.title} by ${blog.author}`
     )
+
     if (confirmResult) {
       await dispatch(removeBlog(blog.id))
+
+      dispatch(setNotification(`Removed blog ${blog.title} by ${blog.author}`, 'success', 5))
       history.push('/')
     }
   }
@@ -50,7 +53,7 @@ const BlogShow = () => {
 
   return (
     <div>
-      <h2>blog app</h2>
+      <h2>Blog app</h2>
       <h2>{blog.title} {blog.author}</h2>
       <a href={blog.url}>{blog.url}</a> <br />
       {blog.likes} likes <button id='likeButton' onClick={handleLike}>like</button> <br />
@@ -60,12 +63,7 @@ const BlogShow = () => {
         : null
       }
 
-      <h3>comments</h3>
-      <ul>
-        {blog.comments && blog.comments.map(comment => 
-          <li key={comment.id}>{comment.content}</li>
-        )}
-      </ul>
+      <BlogComments blog={blog} />
     </div>
   )
 }

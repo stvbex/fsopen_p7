@@ -16,7 +16,7 @@ const notificationReducer = (state = null, action) => {
   }
 }
 
-export const setNotification = (message, color, seconds) => {
+export const setNotification = (message, variant, seconds) => {
   return async dispatch => {
     const resetId = setTimeout(() => dispatch(resetNotification()), seconds * 1000)
 
@@ -24,7 +24,7 @@ export const setNotification = (message, color, seconds) => {
       type: 'SET_NOTIFICATION',
       data: {
         message,
-        color,
+        variant,
         resetId
       }
     })

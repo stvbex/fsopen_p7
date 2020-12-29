@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react'
+import { ListGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { fetchBlogs } from '../reducers/blogReducer'
 
-import Blog from './Blog'
 import BlogForm from './BlogForm'
 import Togglable from './Togglable'
 
@@ -19,17 +20,18 @@ const Blogs = () => {
 
   return (
     <div>
-      <h2>blog app</h2>
+      <h2>Blog app</h2>
       <Togglable buttonLabel='new blog' ref={newBlogToggleRef}>
         <BlogForm parentToggleRef={newBlogToggleRef} />
       </Togglable>
 
-      {blogs.map(blog =>
-        <Blog
-          key={blog.id}
-          blog={blog}
-        />
-      )}
+      <ListGroup as='ul' variant='flush'>
+        {blogs.map(blog => 
+          <ListGroup.Item key={blog.id}>
+            <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
+          </ListGroup.Item>
+        )}
+      </ListGroup>
     </div>
   )
 }

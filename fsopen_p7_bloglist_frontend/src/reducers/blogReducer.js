@@ -1,5 +1,3 @@
-import { setNotification } from './notificationReducer'
-
 import blogService from '../services/blogService'
 
 const blogReducer = (state = [], action) => {
@@ -38,7 +36,7 @@ const blogReducer = (state = [], action) => {
       // Remove selected blog
       const removeIndex = state.findIndex(b => b.id === action.data.blogId)
       state.splice(removeIndex, 1)
-    
+
       return state
 
     default:
@@ -66,8 +64,6 @@ export const createBlog = newBlogData => {
       type: 'NEW_BLOG',
       data: newBlog
     })
-
-    dispatch(setNotification(`a new blog ${newBlog.title} by ${newBlog.author} added`, 'green', 5))
   }
 }
 
@@ -79,8 +75,6 @@ export const updateBlog = (blogId, updatedBlogData) => {
       type: 'UPDATE_BLOG',
       data: updatedBlog
     })
-
-    // TODO? notify
   }
 }
 
@@ -91,6 +85,17 @@ export const removeBlog = blogId => {
     dispatch({
       type: 'REMOVE_BLOG',
       data: { blogId }
+    })
+  }
+}
+
+export const createComment = (blogId, comment) => {
+  return async dispatch => {
+    const updatedBlog = await blogService.addComment(blogId, comment)
+
+    dispatch({
+      type: 'UPDATE_BLOG',
+      data: updatedBlog
     })
   }
 }

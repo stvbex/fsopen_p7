@@ -15,14 +15,12 @@ import {
   Switch
 } from 'react-router-dom'
 
-import './App.css'
-
 const App = () => {
   const currentUser = useSelector(state => state.currentUser)
 
   if (currentUser) {
     return (
-      <div>
+      <div className='container'>
         <Navigation />
         <Notification />
 
@@ -45,7 +43,8 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className='container'>
+      <Notification />
       <div id='login-div'>
         <LoginForm />
       </div>
